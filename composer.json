@@ -1,0 +1,26 @@
+{
+  "name": "lucree/sdk-php-7",
+  "description": "SDK PHP LUCREE",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Bruno Paz",
+      "email": "brunopaz@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "lucree\\SDK\\": "src/"
+    },
+    "psr-0": {
+      "lucree\\SDK\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "ext-json": "*"
+  }
+}
+
