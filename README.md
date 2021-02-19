@@ -1,9 +1,19 @@
-## Criar e autorizar um pagamento
+
+# Autenticação
+##### trocar 'xxxxxxxxx' pela chave fornecida pela Lucree
+````php
+<?php
+// LUCREE CREDENTIAL
+$lucree = new Lucree('xxxxxxxxx'); 
+````
+# Criar e autorizar um pagamento
 https://ecommerce.lucree.com.br/#operation/createPayment  
 ##### No momento da criação do pagamento o mesmo é submetido para a autorização junto a entidade responsável.
 
   
 ````php
+
+
 <?php
 $lucree      = new Lucree('xxxxxxxxx'); // LUCREE CREDENTIAL
 $transaction = new Transaction();
@@ -121,6 +131,7 @@ if ($response->isAccepted()) { //APPROVED
 ````
 
 # Cancelar um pagamento
+https://ecommerce.lucree.com.br/#operation/cancelPayment
 ##### Cancela um pagamento que foi previamente autorizado, esta ação não é executada on-line, ou seja, esta solicitação pode ser atendida após análise futura.
 ````php
 <?php   
@@ -163,6 +174,7 @@ if ($response->isAccepted()) { //APPROVED
 ````
 
 # Capturar um pagamento
+https://ecommerce.lucree.com.br/#operation/capturePayment
 ##### Captura um pagamento autorizado previamente. Esta operação deve ser utilizada, caso o pagamento tenha sido efetuado com o atributo captura manual ativado.
       
 ````php
