@@ -1,3 +1,9 @@
+# Instalação
+##### via composer
+````shell
+composer require brunopazz/lucree-sdk-php-gateway
+````
+
 
 # Autenticação
 ##### trocar 'xxxxxxxxx' pela chave fornecida pela Lucree
