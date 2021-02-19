@@ -27,7 +27,7 @@ $token = new Token();
 $token->setSecurityCode('123');
 $token->setData('');
 
-$response = $lucree->cancel($payment_id, $amount, $card,$token);
+$response = $lucree->cancel($payment_id, $amount, $card, $token);
 
 if ($response->isAccepted()) { //APPROVED
 
