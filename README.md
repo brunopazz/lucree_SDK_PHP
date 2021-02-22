@@ -210,6 +210,29 @@ if ($response->isAccepted()) { //APPROVED
 }
 ````
 
+# Token Card
+https://ecommerce.lucree.com.br/#operation/tokenizeCard
+##### Cria um token através de um número do cartão, que posteriormente pode ser utilizado para enviar pagamentos, sem a necessidade do número do cartão.
+     
+
+````php
+<?php  
+//Card
+$card = new Card();
+$card->setPan(411111111111111);
+$card->setExpiryMm(12);
+$card->setExpiryYyyy(2021);
+
+
+$tokenized = $lucree->tokenizer($card);
+
+if($tokenized->isAccepted()){
+
+
+}
+````
+
+
 ## Formato da API 
 ```json
 
