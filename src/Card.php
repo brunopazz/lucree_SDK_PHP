@@ -135,6 +135,7 @@ class Card implements \JsonSerializable
      */
     public function setType($type)
     {
+
         $this->type = $type;
 
         return $this;
@@ -148,5 +149,9 @@ class Card implements \JsonSerializable
         });
 
         return $vars_clear;
+    }
+    public function toJSON()
+    {
+        return json_encode(self::jsonSerialize(), JSON_PRETTY_PRINT);
     }
 }

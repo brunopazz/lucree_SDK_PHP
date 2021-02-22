@@ -52,10 +52,15 @@ class Response implements \JsonSerializable
     /**
      * @var
      */
-    private $error ;
-
-
-
+    private $error;
+    /**
+     * @var
+     */
+    private $token;
+    /**
+     * @var
+     */
+    private $truncated_card;
 
 
     /**
@@ -66,6 +71,75 @@ class Response implements \JsonSerializable
     public function __construct($response)
     {
         $this->mapperJson($response);
+    }
+
+    /**
+     * @param $json
+     *
+     * @return $this
+     */
+    public function mapperJson($json)
+    {
+
+
+        if ( ! is_array($json)) {
+            return $this;
+        }
+
+        array_walk_recursive($json, function ($value, $key) use (&$json) {
+
+            if (property_exists($this, $key)) {
+                if (empty($this->$key)) {
+                    $this->$key = $value;
+                }
+            }
+        });
+
+        if (isset($json['risk_management'])) {
+            $this->risk_management = $json['risk_management'];
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     *
+     * @return Response
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTruncatedCard()
+    {
+        return $this->truncated_card;
+    }
+
+    /**
+     * @param mixed $truncated_card
+     *
+     * @return Response
+     */
+    public function setTruncatedCard($truncated_card)
+    {
+        $this->truncated_card = $truncated_card;
+
+        return $this;
     }
 
     /**
@@ -148,53 +222,25 @@ class Response implements \JsonSerializable
         return $this->response;
     }
 
-
     /**
      * @param mixed $response
      */
     public function setResponse($response)
     {
-        $this->response = json_encode($response,JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        $this->response = json_encode($response,
+            JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 
     }
 
     /**
-     * @param $json
-     *
-     * @return $this
+     * @return bool
      */
-    public function mapperJson($json)
+    public function isAccepted()
     {
 
-
-        if ( ! is_array($json)) {
-            return $this;
-        }
-
-        array_walk_recursive($json, function ($value, $key)use(&$json) {
-
-            if (property_exists($this, $key)) {
-                if (empty($this->$key)) {
-                    $this->$key = $value;
-                }
-            }
-        });
-
-        if(isset($json['risk_management'])){
-            $this->risk_management = $json['risk_management'];
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAccepted(){
-
-        if(isset($this->response_code) && $this->response_code == "ACCEPTED"){
+        if (isset($this->response_code) && $this->response_code == "ACCEPTED") {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -202,11 +248,12 @@ class Response implements \JsonSerializable
     /**
      * @return bool
      */
-    public function isDenied(){
+    public function isDenied()
+    {
 
-        if(isset($this->response_code) && $this->response_code == "DENIED"){
+        if (isset($this->response_code) && $this->response_code == "DENIED") {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -214,11 +261,12 @@ class Response implements \JsonSerializable
     /**
      * @return bool
      */
-    public function isBlocked(){
+    public function isBlocked()
+    {
 
-        if(isset($this->response_code) && $this->response_code == "BLOCKED"){
+        if (isset($this->response_code) && $this->response_code == "BLOCKED") {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -226,11 +274,12 @@ class Response implements \JsonSerializable
     /**
      * @return bool
      */
-    public function hasError(){
+    public function hasError()
+    {
 
-        if(isset($this->error)){
+        if (isset($this->error)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

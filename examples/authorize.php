@@ -12,7 +12,7 @@ include_once("../vendor/autoload.php");
 
 $lucree      = new Lucree('xxxxxxxxxxx');
 $transaction = new Transaction();
-$transaction->setId("teste");
+$transaction->setId("02221");
 $transaction->setAmount(1000);
 $transaction->setCaptureManually(false);
 $transaction->setRiskBypass(false);
@@ -24,7 +24,7 @@ $card->setPan(411111111111111);
 $card->setSecurityCode(123);
 $card->setExpiryMm(12);
 $card->setExpiryYyyy(2021);
-$card->setType('creditcard');
+$card->setType(CardType::VISA);
 $transaction->setCard($card);
 
 //Token
@@ -37,8 +37,8 @@ $transaction->setToken($token);
 //Installment
 $installment = new Installment();
 $installment->setNumberOfInstallments(12);
-$installment->setAmountPerInstallment(1000);
-$installment->setDownPaymentAmount(1000);
+//$installment->setAmountPerInstallment(1000);
+//$installment->setDownPaymentAmount(10);
 $transaction->setInstallment($installment);
 
 //Cardholder
@@ -103,6 +103,8 @@ $store_details->setId('0001');
 $store_details->setName('store name');
 $transaction->setStoreDetails($store_details);
 
+
+print $transaction->toJSON();exit;
 
 $response = $lucree->authorize($transaction);
 

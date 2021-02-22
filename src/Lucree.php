@@ -133,4 +133,22 @@ class Lucree
         return $response->toJSON();
     }
 
+    /**
+     * @param Card $card
+     *
+     * @return Response
+     */
+    public function tokenizer(Card $card){
+        $request = new Request(self::getCredential());
+
+        try{
+            $result = $request->post("https://ecommerce.lucree.com.br/v2/cards/tokenize",$card->toJSON());
+        }catch (\Exception $exception){
+            $result = ['error'=>$exception->getMessage()];
+        }
+        $response = new Response($result);
+
+        return $response;
+    }
+
 }
