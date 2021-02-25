@@ -53,20 +53,25 @@ class Request
         $headers = array(
             'Authorization: Basic '.$this->token,
             'Content-Type: application/json',
+            'Accept: application/json'
         );
+
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($curl, CURLOPT_ENCODING, "");
         if ($method == 'POST') {
-            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
             curl_setopt($curl, CURLOPT_POSTFIELDS, $json);
+
         } elseif ($method == 'GET') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
         }
 
         $response = curl_exec($curl);
+
 
         if (curl_errno($curl)) {
             $info   = curl_getinfo($curl);

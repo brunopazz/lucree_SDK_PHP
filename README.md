@@ -14,8 +14,11 @@ https://ecommerce.lucree.com.br
 ##### trocar 'xxxxxxxxx' pela chave fornecida pela Lucree
 ````php
 <?php
-// LUCREE CREDENTIAL
-$lucree = new Lucree('xxxxxxxxx'); 
+// LUCREE MODO PRODUTIVO
+$lucree = new Lucree('xxxxxxxxx',true); 
+
+// LUCREE MODO STAGE
+$lucree = new Lucree('xxxxxxxxx',false); 
 ````
 # Criar e autorizar um pagamento
 https://ecommerce.lucree.com.br/#operation/createPayment  
@@ -23,16 +26,13 @@ https://ecommerce.lucree.com.br/#operation/createPayment
 
   
 ````php
-
-
 <?php
-$lucree      = new Lucree('xxxxxxxxx'); // LUCREE CREDENTIAL
+$lucree      = new Lucree('xxxxx==',false);
 $transaction = new Transaction();
-$transaction->setId("teste");
+$transaction->setId("02221");
 $transaction->setAmount(1000);
-$transaction->setCaptureManually(false);
-$transaction->setRiskBypass(false);
-
+$transaction->setCaptureManually(true);
+$transaction->setRiskBypass(true);
 
 //Card
 $card = new Card();
@@ -40,21 +40,14 @@ $card->setPan(411111111111111);
 $card->setSecurityCode(123);
 $card->setExpiryMm(12);
 $card->setExpiryYyyy(2021);
-$card->setType('creditcard');
+$card->setType(CardType::VISA);
 $transaction->setCard($card);
-
-//Token
-$token = new Token();
-$token->setSecurityCode('123');
-$token->setData('');
-$transaction->setToken($token);
-
 
 //Installment
 $installment = new Installment();
-$installment->setNumberOfInstallments(12);
-$installment->setAmountPerInstallment(1000);
-$installment->setDownPaymentAmount(1000);
+$installment->setNumberOfInstallments(2);
+$installment->setAmountPerInstallment(500);
+//$installment->setDownPaymentAmount(10);
 $transaction->setInstallment($installment);
 
 //Cardholder
@@ -118,7 +111,6 @@ $store_details = new StoreDetails();
 $store_details->setId('0001');
 $store_details->setName('store name');
 $transaction->setStoreDetails($store_details);
-
 
 $response = $lucree->authorize($transaction);
 
@@ -238,89 +230,3 @@ if($tokenized->isAccepted()){
 ````
 
 
-## Formato da API 
-```json
-
-{
-  "id": "string",
-  "amount": 0,
-  "capture_manually": false,
-  "risk_bypass": false,
-  "card": {
-    "pan": "string",
-    "expiry_mm": "string",
-    "expiry_yyyy": "string",
-    "security_code": "string",
-    "type": "string"
-  },
-  "token": {
-    "data": "string",
-    "security_code": "string"
-  },
-  "installment": {
-    "number_of_installments": 0,
-    "down_payment_amount": 0,
-    "amount_per_installment": 0
-  },
-  "cardholder": {
-    "first_name": "string",
-    "last_name": null,
-    "phone_type": "HOME",
-    "phone_number": "string",
-    "email": "string",
-    "document_number": "string"
-  },
-  "billing_address": {
-    "street": "string",
-    "number": "string",
-    "neighborhood": "string",
-    "country_code": "string",
-    "city_name": "string",
-    "state_code": "string",
-    "postal_code": "string"
-  },
-  "delivery_address": {
-    "street": "string",
-    "number": "string",
-    "neighborhood": "string",
-    "country_code": "string",
-    "city_name": "string",
-    "state_code": "string",
-    "postal_code": "string"
-  },
-  "order_details": {
-    "items": [
-      {
-        "sku": "string",
-        "description": "string",
-        "quantity": 0,
-        "unitary_value": 0
-      }
-    ],
-    "store_pickup": "string",
-    "ship_value": 0
-  },
-  "device_fingerprint": {
-    "session_id": "string",
-    "id_address": "string",
-    "app_version": "string",
-    "os": "string"
-  },
-  "store_details": {
-    "id": "string",
-    "name": "string"
-  },
-  "client_details": {
-    "registration_age": 0,
-    "first_purchase_age": 0,
-    "last_purchase_age": 0,
-    "login_attempts": 0,
-    "orders_canceled": 0,
-    "cash_purchases": 0,
-    "online_cc_purchases": 0,
-    "offline_cc_purchases": 0,
-    "debit_purchases": 0,
-    "total_purchases": 0
-  }
-}
-```

@@ -238,7 +238,7 @@ class Response implements \JsonSerializable
     public function isAccepted()
     {
 
-        if (isset($this->response_code) && $this->response_code == "ACCEPTED") {
+        if (isset($this->result_code) && $this->result_code == "ACCEPTED") {
             return true;
         } else {
             return false;
@@ -251,7 +251,7 @@ class Response implements \JsonSerializable
     public function isDenied()
     {
 
-        if (isset($this->response_code) && $this->response_code == "DENIED") {
+        if (isset($this->result_code) && $this->result_code == "DENIED") {
             return true;
         } else {
             return false;
@@ -264,7 +264,7 @@ class Response implements \JsonSerializable
     public function isBlocked()
     {
 
-        if (isset($this->response_code) && $this->response_code == "BLOCKED") {
+        if (isset($this->result_code) && $this->result_code == "BLOCKED") {
             return true;
         } else {
             return false;

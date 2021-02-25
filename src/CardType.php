@@ -17,10 +17,10 @@ namespace lucree\SDK;
 class CardType
 {
 
-    const  VISA = "001 - Visa";
-    const  MASTERCARD = "002 - Mastercard";
-    const  AMEX = "003 - Amex";
-    const  HIPERCARD = "050 -Hipercard ";
-    const  ELO = "054 - ELO";
+    const  VISA = "001";
+    const  MASTERCARD = "002";
+    const  AMEX = "003";
+    const  HIPERCARD = "050";
+    const  ELO = "054";
 
 }

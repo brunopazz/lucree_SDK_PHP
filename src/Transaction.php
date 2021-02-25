@@ -43,7 +43,7 @@ class Transaction implements \JsonSerializable
     /**
      * @var
      */
-    private $installment;
+    private $installment ="1";
     /**
      * @var
      */
@@ -213,7 +213,7 @@ class Transaction implements \JsonSerializable
      */
     public function setInstallment(Installment $installment)
     {
-        $this->installment = $installment;
+        $this->installment =  $installment;
 
         return $this;
     }

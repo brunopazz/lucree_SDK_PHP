@@ -7,15 +7,14 @@
  */
 
 namespace lucree\SDK;
-
 include_once("../vendor/autoload.php");
 
-$lucree      = new Lucree('xxxxxxxxxxx');
+$lucree      = new Lucree('xxxxx==',false);
 $transaction = new Transaction();
 $transaction->setId("02221");
 $transaction->setAmount(1000);
-$transaction->setCaptureManually(false);
-$transaction->setRiskBypass(false);
+$transaction->setCaptureManually(true);
+$transaction->setRiskBypass(true);
 
 
 //Card
@@ -27,17 +26,11 @@ $card->setExpiryYyyy(2021);
 $card->setType(CardType::VISA);
 $transaction->setCard($card);
 
-//Token
-$token = new Token();
-$token->setSecurityCode('123');
-$token->setData('');
-$transaction->setToken($token);
-
 
 //Installment
 $installment = new Installment();
-$installment->setNumberOfInstallments(12);
-//$installment->setAmountPerInstallment(1000);
+$installment->setNumberOfInstallments(2);
+$installment->setAmountPerInstallment(500);
 //$installment->setDownPaymentAmount(10);
 $transaction->setInstallment($installment);
 
@@ -104,13 +97,32 @@ $store_details->setName('store name');
 $transaction->setStoreDetails($store_details);
 
 
-print $transaction->toJSON();exit;
-
+print "Autorizando ... <br>";
 $response = $lucree->authorize($transaction);
 
 if ($response->isAccepted()) { //APPROVED
+    print "Autorizando ... ok  ".$response->getPaymentId()."<br>";
+    print "Capturando ... <br>";
 
-    print $response->toJSON();
+    $capture = $lucree->capture($response->getPaymentId(), $transaction->getAmount(), true);
+
+    if($capture->isAccepted()){
+        print "Capturado ... OK<br>";
+        print "Cancelando ... ".$transaction->getAmount()."<br>";
+
+        $cancel = $lucree->cancel($response->getPaymentId(), $transaction->getAmount(), $card);
+
+        if($cancel->isAccepted()){
+            print "Calcelando ... OK<br>";
+
+        }else{
+
+            print "Calcelando ... error<br>";
+            print $cancel->toJSON();
+
+        }
+
+    }
 
 } elseif ($response->isDenied()) { //DENIED - FALIED
 

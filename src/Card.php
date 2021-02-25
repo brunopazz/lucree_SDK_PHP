@@ -55,7 +55,7 @@ class Card implements \JsonSerializable
      */
     public function setPan($pan)
     {
-        $this->pan = $pan;
+        $this->pan = (string) $pan;
 
         return $this;
     }
@@ -75,7 +75,7 @@ class Card implements \JsonSerializable
      */
     public function setExpiryMm($expiry_mm)
     {
-        $this->expiry_mm = $expiry_mm;
+        $this->expiry_mm = (string) $expiry_mm;
 
         return $this;
     }
@@ -95,7 +95,7 @@ class Card implements \JsonSerializable
      */
     public function setExpiryYyyy($expiry_yyyy)
     {
-        $this->expiry_yyyy = $expiry_yyyy;
+        $this->expiry_yyyy = (string) $expiry_yyyy;
 
         return $this;
     }
@@ -115,7 +115,7 @@ class Card implements \JsonSerializable
      */
     public function setSecurityCode($security_code)
     {
-        $this->security_code = $security_code;
+        $this->security_code = (string) $security_code;
 
         return $this;
     }
@@ -136,7 +136,7 @@ class Card implements \JsonSerializable
     public function setType($type)
     {
 
-        $this->type = $type;
+        $this->type = (string) $type;
 
         return $this;
     }

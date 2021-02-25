@@ -10,7 +10,7 @@ namespace lucree\SDK;
 
 include_once("../vendor/autoload.php");
 
-$lucree     = new Lucree('xxxxxxxxxxx');
+$lucree      = new Lucree('xxxxx==',false);
 $payment_id = "xxxxxxxxxxx";
 $amount     = 1000;
 

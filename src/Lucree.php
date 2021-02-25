@@ -21,15 +21,28 @@ class Lucree
      * @var
      */
     private $credential;
+    /**
+     * @var string
+     */
+    private $environment;
+
 
     /**
      * Lucree constructor.
      *
-     * @param $credential
+     * @param      $credential
+     * @param bool $production
      */
-    public function __construct($credential)
+    public function __construct($credential,$production = true)
     {
         $this->credential = $credential;
+
+        if($production){
+            $this->environment = "";
+        }else{
+            $this->environment = "-stage";
+        }
+
     }
 
     /**
@@ -62,7 +75,7 @@ class Lucree
 
         $request = new Request(self::getCredential());
         try{
-            $result = $request->post("https://ecommerce.lucree.com.br/v2/payments/pay",$transaction->toJSON());
+            $result = $request->post("https://ecommerce".$this->environment.".lucree.com.br/v2/payments/pay",$transaction->toJSON());
         }catch (\Exception $exception){
             $result = ['error'=>$exception->getMessage()];
         }
@@ -76,7 +89,7 @@ class Lucree
      * @param Card|null  $card
      * @param Token|null $token
      *
-     * @return false|string
+     * @return Response
      */
     public function cancel($payment_id, $amount = false,Card $card = null,Token $token = null){
 
@@ -96,12 +109,12 @@ class Lucree
 
         $request = new Request(self::getCredential());
         try{
-            $result = $request->post("https://ecommerce.lucree.com.br/v2/payments/cancel",json_encode($json));
+            $result = $request->post("https://ecommerce".$this->environment.".lucree.com.br/v2/payments/cancel",json_encode($json));
         }catch (\Exception $exception){
             $result = ['error'=>$exception->getMessage()];
         }
         $response = new Response($result);
-        return $response->toJSON();
+        return $response;
     }
 
     /**
@@ -109,7 +122,7 @@ class Lucree
      * @param bool $amount
      * @param bool $confirm
      *
-     * @return false|string
+     * @return Response
      */
     public function capture($payment_id, $amount = false, $confirm = true){
 
@@ -125,12 +138,12 @@ class Lucree
 
         $request = new Request(self::getCredential());
         try{
-            $result = $request->post("https://ecommerce.lucree.com.br/v2/payments/capture",json_encode($json));
+            $result = $request->post("https://ecommerce".$this->environment.".lucree.com.br/v2/payments/capture",json_encode($json));
         }catch (\Exception $exception){
             $result = ['error'=>$exception->getMessage()];
         }
         $response = new Response($result);
-        return $response->toJSON();
+        return $response;
     }
 
     /**
@@ -142,7 +155,7 @@ class Lucree
         $request = new Request(self::getCredential());
 
         try{
-            $result = $request->post("https://ecommerce.lucree.com.br/v2/cards/tokenize",$card->toJSON());
+            $result = $request->post("https://ecommerce".$this->environment.".lucree.com.br/v2/cards/tokenize",$card->toJSON());
         }catch (\Exception $exception){
             $result = ['error'=>$exception->getMessage()];
         }
