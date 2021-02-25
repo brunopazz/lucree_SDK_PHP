@@ -138,7 +138,7 @@ https://ecommerce.lucree.com.br/#operation/cancelPayment
 ##### Cancela um pagamento que foi previamente autorizado, esta ação não é executada on-line, ou seja, esta solicitação pode ser atendida após análise futura.
 ````php
 <?php   
-$lucree     = new Lucree('xxxxxxxxxxx');
+$lucree     = new Lucree('xxxxxxxxx',false); 
 $payment_id = "xxxxxxxxxxx";
 $amount     = 1000;
 
@@ -182,7 +182,7 @@ https://ecommerce.lucree.com.br/#operation/capturePayment
       
 ````php
 <?php  
-$lucree     = new Lucree('xxxxxxxxxxx');
+$lucree     = new Lucree('xxxxxxxxx',false); 
 $payment_id = "xxxxxxxxxxx";
 $amount     = 1000;
 
