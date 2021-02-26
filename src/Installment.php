@@ -45,7 +45,7 @@ class Installment implements \JsonSerializable
      */
     public function setNumberOfInstallments($number_of_installments)
     {
-        $this->number_of_installments =  $number_of_installments;
+        $this->number_of_installments = (integer) $number_of_installments;
 
         return $this;
     }
@@ -85,7 +85,7 @@ class Installment implements \JsonSerializable
      */
     public function setAmountPerInstallment($amount_per_installment)
     {
-        $this->amount_per_installment =  $amount_per_installment;
+        $this->amount_per_installment =   (integer) $amount_per_installment;
 
         return $this;
     }
