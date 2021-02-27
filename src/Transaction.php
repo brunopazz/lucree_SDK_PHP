@@ -43,7 +43,7 @@ class Transaction implements \JsonSerializable
     /**
      * @var
      */
-    private $installment ="1";
+    private $installment;
     /**
      * @var
      */

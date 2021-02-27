@@ -211,7 +211,7 @@ class Response implements \JsonSerializable
      */
     public function getAuthorizedAmount()
     {
-        return $this->authorized_amount;
+        return str_replace('.','',$this->authorized_amount);
     }
 
     /**
